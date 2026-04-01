@@ -53,7 +53,7 @@ app.use(helmet({
 }));
 
 // SECURITY: CORS with environment-based origins
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'https://andrea-laroca-frontend.vercel.app', 'https://andrea-laroca-frontend-b0ozp5yi6-kama1.vercel.app'];
 app.use(cors({
     origin: function(origin, callback) {
         // Allow requests with no origin (mobile apps, curl, etc.)
