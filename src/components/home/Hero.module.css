@@ -195,13 +195,31 @@
     }
 
     .title {
-        font-size: clamp(2rem, 8vw, 3rem);
-        margin-bottom: 1.5rem;
+        font-size: clamp(1.8rem, 8vw, 3rem);
+        margin-bottom: 1.25rem;
     }
 
     .subtitle {
-        font-size: 1rem;
-        padding: 0 1rem;
-        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
+        padding: 0 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .content {
+        padding: 6rem 1rem 0;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: clamp(1.5rem, 9vw, 2.5rem);
+    }
+    .eyebrow {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
     }
 }

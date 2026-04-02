@@ -83,12 +83,30 @@
     opacity: 0.5;
 }
 
+@media (max-width: 1024px) {
+    .footerInner {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .footerInner {
         grid-template-columns: 1fr;
         text-align: center;
     }
+
+    .newsletterParams {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .input, .button {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+    }
 }
+
 
 .signature {
     text-align: center;
