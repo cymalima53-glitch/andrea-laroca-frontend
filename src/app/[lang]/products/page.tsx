@@ -86,10 +86,10 @@ export default async function RetailProductsPage({ params }: { params: Promise<{
                             fontSize: 'clamp(1rem, 4vw, 1.25rem)',
                             letterSpacing: '0.5px'
                         }}>
-                            Shop freely — No account needed.
+                            Browse and order as a guest. No account required for retail purchases.
                         </p>
                         <p style={{ color: '#EAE0D5', margin: 0, fontSize: '0.9rem', opacity: 0.9 }}>
-                            Browse and order as a guest. Sign up only if you want to save your orders.
+                            Wholesale distributors: Create an account to access bulk pricing and exclusive offers.
                         </p>
                     </div>
                 </div>
