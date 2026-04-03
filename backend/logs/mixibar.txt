@@ -1,0 +1,10 @@
+﻿Mixibar items found: 1
+  id=44 name=Mixibar
+  variants type: object
+  variants isArray: true
+  variants count: 0
+  variants: []
+
+  TEST WRITE: sending [{"size":"One","type":"Flavour A","price":0},{"size":"One","type":"Flavour B","price":0},{"size":"One","type":"Flavour C","price":0}]
+  AFTER WRITE: [{"size":"One","type":"Flavour A","price":0},{"size":"One","type":"Flavour B","price":0},{"size":"One","type":"Flavour C","price":0}]
+  Count: 3

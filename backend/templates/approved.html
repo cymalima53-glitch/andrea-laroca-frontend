@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); padding: 40px 20px; text-align: center; }
+        .header-icon { font-size: 48px; margin-bottom: 10px; }
+        .logo { font-size: 28px; font-weight: bold; color: white; margin-bottom: 10px; }
+        .tagline { color: #fff; font-size: 14px; opacity: 0.95; }
+        .content { padding: 40px 30px; color: #333; }
+        .greeting { font-size: 24px; font-weight: bold; color: #2c1810; margin-bottom: 20px; }
+        .message { font-size: 14px; line-height: 1.8; color: #555; margin-bottom: 20px; }
+        .success-box { background: #d4edda; border-left: 4px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .success-title { font-weight: bold; color: #155724; font-size: 16px; margin-bottom: 10px; }
+        .success-text { color: #155724; font-size: 14px; }
+        .features { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .feature-item { display: flex; margin-bottom: 15px; }
+        .feature-icon { font-size: 24px; margin-right: 15px; }
+        .feature-text { font-size: 13px; color: #555; line-height: 1.6; }
+        .feature-text strong { color: #2c1810; }
+        .credentials-box { background: #f0f8ff; border: 1px solid #d4af37; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .credentials-title { font-weight: bold; color: #2c1810; margin-bottom: 15px; font-size: 14px; }
+        .credential { font-size: 13px; color: #555; margin-bottom: 10px; font-family: 'Courier New', monospace; }
+        .credential strong { color: #d4af37; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 20px 0; font-size: 14px; }
+        .footer { background: #2c1810; color: #d4af37; padding: 30px 20px; text-align: center; font-size: 12px; }
+        .footer p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">✅</div>
+            <div class="logo">LA ROCCA</div>
+            <div class="tagline">Congratulations! Your Account is Approved</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">Welcome Aboard, {{name}}! 🎊</div>
+            
+            <div class="message">
+                Great news! Your wholesale account with <strong>{{company_name}}</strong> has been <strong>APPROVED</strong>. You now have full access to our exclusive wholesale catalogue and pricing.
+            </div>
+
+            <!-- Success Box -->
+            <div class="success-box">
+                <div class="success-title">✓ Account Status: APPROVED</div>
+                <div class="success-text">
+                    Your account is fully activated and ready to use. You can now log in and start browsing our premium products.
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🏷️</div>
+                    <div class="feature-text"><strong>Exclusive Pricing</strong> - Wholesale rates on all products</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛒</div>
+                    <div class="feature-text"><strong>Full Catalogue Access</strong> - Browse all premium items</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <div class="feature-text"><strong>Bulk Orders</strong> - Net 30 / On Account pricing</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📞</div>
+                    <div class="feature-text"><strong>Dedicated Support</strong> - Your account manager is ready</div>
+                </div>
+            </div>
+
+            <!-- Credentials -->
+            <div class="credentials-box">
+                <div class="credentials-title">Your Login Credentials:</div>
+                <div class="credential">Email: <strong>{{email}}</strong></div>
+                <div class="credential">Password: <strong>••••••••</strong> (as you set it)</div>
+            </div>
+
+            <div class="message">
+                <strong>Ready to get started?</strong>
+            </div>
+
+            <a href="{{login_url}}" class="cta-button">Log In to Your Account</a>
+
+            <div class="message">
+                <strong>Next Steps:</strong><br>
+                1. Log in with your credentials<br>
+                2. Browse our exclusive wholesale catalogue<br>
+                3. Create your first order<br>
+                4. Our team will process and confirm pricing<br>
+                5. Enjoy Net 30 payment terms!
+            </div>
+
+            <div class="message">
+                If you have any questions or need assistance, our team is here to help!<br><br>
+                Best regards,<br>
+                <strong>The LA ROCCA Team</strong>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>LA ROCCA Fine Foods & Beverage</strong></p>
+            <p>Boca Raton, Florida 33432</p>
+            <p>📞 561-391-1653 | 📧 support@larocca.com</p>
+            <p>© 2026 All rights reserved</p>
+        </div>
+    </div>
+</body>
+</html>

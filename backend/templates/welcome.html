@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #2c1810 0%, #1a0f08 100%); padding: 40px 20px; text-align: center; }
+        .logo { font-size: 28px; font-weight: bold; color: #d4af37; margin-bottom: 10px; }
+        .tagline { color: #fff; font-size: 14px; opacity: 0.9; }
+        .content { padding: 40px 30px; color: #333; }
+        .greeting { font-size: 24px; font-weight: bold; color: #2c1810; margin-bottom: 20px; }
+        .message { font-size: 14px; line-height: 1.8; color: #555; margin-bottom: 20px; }
+        .status-box { background: #fffbea; border-left: 4px solid #d4af37; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .status-title { font-weight: bold; color: #856404; font-size: 14px; margin-bottom: 8px; }
+        .status-text { color: #666; font-size: 13px; }
+        .timeline { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .timeline-item { display: flex; margin-bottom: 15px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-number { background: #d4af37; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; flex-shrink: 0; }
+        .timeline-text { font-size: 13px; color: #555; line-height: 1.6; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%); color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 20px 0; font-size: 14px; }
+        .contact-info { background: #f0f0f0; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; font-size: 13px; color: #666; }
+        .contact-info strong { color: #2c1810; }
+        .footer { background: #2c1810; color: #d4af37; padding: 30px 20px; text-align: center; font-size: 12px; }
+        .footer p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">LA ROCCA</div>
+            <div class="tagline">Premium Italian Coffee & Beverage</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">Welcome to LA ROCCA! 🎉</div>
+            
+            <div class="message">
+                Hi {{name}},<br><br>
+                Thank you for applying to join the LA ROCCA Premium Distributor Network. We're excited about the possibility of working with <strong>{{company_name}}</strong>!
+            </div>
+
+            <!-- Status Box -->
+            <div class="status-box">
+                <div class="status-title">📋 Your Application Status</div>
+                <div class="status-text">
+                    Your wholesale account application has been received and is currently <strong>under review</strong>. Our team will carefully evaluate your information and contact you soon with approval status.
+                </div>
+            </div>
+
+            <div class="message">
+                <strong>What happens next?</strong>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-text"><strong>Review (24-48 hours)</strong><br>Our team evaluates your application</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-text"><strong>Decision</strong><br>You'll receive an approval or follow-up email</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-text"><strong>Access Granted</strong><br>View exclusive wholesale catalogue & pricing</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-text"><strong>Start Ordering</strong><br>Place your first wholesale order</div>
+                </div>
+            </div>
+
+            <div class="message">
+                In the meantime, check out our website to learn more about our premium products and company values.
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <strong>Have questions?</strong><br>
+                📞 Call us: <strong>561-391-1653</strong><br>
+                📧 Email: <strong>support@larocca.com</strong><br>
+                We're here to help!
+            </div>
+
+            <div class="message">
+                Best regards,<br>
+                <strong>The LA ROCCA Team</strong>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>LA ROCCA Fine Foods & Beverage</strong></p>
+            <p>Boca Raton, Florida 33432</p>
+            <p>© 2026 All rights reserved</p>
+        </div>
+    </div>
+</body>
+</html>

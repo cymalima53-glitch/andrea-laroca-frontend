@@ -1,0 +1,37 @@
+﻿
+=== CATALOGUE VARIANTS DIAGNOSTIC ===
+
+Recent catalogue items:
+  id=91 | "Thank You Bags" | variants count: 0
+  id=90 | "Toilet Paper" | variants count: 0
+  id=89 | "Paper Towels" | variants count: 0
+  id=88 | "Napkins" | variants count: 0
+  id=87 | "Containers to Go" | variants count: 0
+  id=86 | "Cup Sleeves" | variants count: 0
+  id=85 | "Lids" | variants count: 0
+  id=84 | "Plastic Cups" | variants count: 0
+  id=83 | "Paper Cups" | variants count: 0
+  id=82 | "Garbage Bags" | variants count: 0
+
+--- Current DB state for id=22 ---
+  name: Coppini EVO Tin
+  variants raw: []
+  variants count: 0
+
+--- WRITE TEST: saving 3 variants to id=22 ---
+  Sending: [{"size":"Small","type":"Original","price":10},{"size":"Medium","type":"Original","price":20},{"size":"Large","type":"Original","price":30}]
+  After save: [{"size":"Small","type":"Original","price":10},{"size":"Medium","type":"Original","price":20},{"size":"Large","type":"Original","price":30}]
+  Count: 3
+
+Γ£à DB layer works ΓÇö 3 variants saved and read back correctly.
+   ΓåÆ Bug is in the PUT route: variants are NOT arriving in req.body,
+     OR the frontend is sending parsedVariants=[] (empty after filter).
+
+   ACTION: Check the backend route console for incoming req.body.variants
+   (logging has been added to routes/catalogue.js PUT endpoint)
+
+--- Column type ---
+  variants: jsonb
+
+=====================================
+

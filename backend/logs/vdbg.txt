@@ -1,0 +1,30 @@
+﻿
+========================================
+ VARIANT SAVE/LOAD DIAGNOSTIC
+========================================
+
+Γ£à Using product ID=1 ("Passalacqua Espresso Beans")
+   Current variants in DB: [{"size":"1lb","type":"Regular","price":12},{"size":"1lb","type":"Decaf","price":13},{"size":"2lb","type":"Regular","price":20},{"size":"2lb","type":"Decaf","price":21},{"size":"5lb","type":"Regular","price":45},{"size":"5lb","type":"Decaf","price":47}]
+   Current variant count: 6
+
+≡ƒôï Column "variants" type: jsonb (jsonb)
+
+--- WRITE TEST (simulating PUT route) ---
+   Sending JSON string (253 chars): [{"size":"1lb","type":"Regular","price":12},{"size":"1lb","type":"Decaf","price":13},{"size":"2lb","type":"Regular","price":20},{"size":"2lb","type":"Decaf","price":21},{"size":"5lb","type":"Regular","price":45},{"size":"5lb","type":"Decaf","price":47}]
+   Γ£à UPDATE executed.
+
+--- READ BACK TEST ---
+   Raw value from DB: [{"size":"1lb","type":"Regular","price":12},{"size":"1lb","type":"Decaf","price":13},{"size":"2lb","type":"Regular","price":20},{"size":"2lb","type":"Decaf","price":21},{"size":"5lb","type":"Regular","price":45},{"size":"5lb","type":"Decaf","price":47}]
+   Type: object | isArray: true
+   Count: 6
+
+--- VERDICT ---
+Γ£à DB correctly stored and returned ALL 6 variants.
+   ΓåÆ The bug is in the FRONTEND (variants are being truncated before the POST/PUT).
+   ΓåÆ Add console.log(variants) right before the fetch() call in handleSubmit to confirm.
+
+--- CATALOGUE TABLE CHECK ---
+   catalogue.variants type: jsonb (jsonb)
+
+========================================
+

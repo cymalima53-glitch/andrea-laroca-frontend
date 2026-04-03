@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 700px; margin: 20px auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%); padding: 50px 40px; text-align: center; }
+        .logo { display: inline-block; margin-bottom: 20px; }
+        .logo img { height: 70px; max-width: 250px; }
+        .invoice-title { color: #d4af37; font-size: 24px; font-weight: 700; margin-top: 15px; }
+        .invoice-number { color: #999; font-size: 13px; }
+        .content { padding: 50px 40px; }
+        .greeting { font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 25px; }
+        .invoice-info { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .info-section { }
+        .info-title { font-weight: 700; color: #1a1a1a; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; color: #d4af37; }
+        .info-text { color: #555; font-size: 14px; line-height: 1.8; }
+        .info-text strong { color: #1a1a1a; display: block; }
+        .divider { border-top: 2px solid #d4af37; margin: 30px 0; }
+        .items-section { }
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .items-header { background: #f9f9f9; border-bottom: 2px solid #d4af37; }
+        .items-header th { padding: 12px; text-align: left; font-weight: 700; color: #1a1a1a; font-size: 13px; }
+        .items-row { border-bottom: 1px solid #eee; }
+        .items-row:last-child { border-bottom: none; }
+        .items-row td { padding: 15px 12px; font-size: 14px; color: #555; }
+        .items-row .item-name { font-weight: 600; color: #1a1a1a; }
+        .items-row .item-number { color: #999; }
+        .items-row .text-right { text-align: right; }
+        .summary-section { background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%); padding: 25px; border-radius: 8px; margin: 25px 0; }
+        .summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; color: #555; }
+        .summary-row .label { font-weight: 600; }
+        .summary-row .amount { color: #1a1a1a; }
+        .summary-total { border-top: 2px solid #d4af37; padding-top: 15px; font-weight: 700; color: #1a1a1a; font-size: 16px; }
+        .summary-total .amount { color: #d4af37; font-size: 20px; }
+        .payment-terms { background: #fffbea; border-left: 4px solid #d4af37; padding: 20px; margin: 25px 0; border-radius: 6px; }
+        .payment-terms-title { font-weight: 700; color: #856404; margin-bottom: 10px; font-size: 14px; }
+        .payment-terms-text { color: #666; font-size: 13px; line-height: 1.6; }
+        .payment-section { text-align: center; margin: 30px 0; }
+        .payment-button { display: inline-block; background: linear-gradient(135deg, #c82333 0%, #a01d29 100%); color: white; padding: 16px 45px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 4px 15px rgba(200, 35, 51, 0.3); }
+        .payment-button:hover { transform: translateY(-2px); }
+        .notes-section { background: #f0f8ff; border: 1px solid #b3d9e8; padding: 20px; border-radius: 6px; margin: 25px 0; }
+        .notes-title { font-weight: 700; color: #1565c0; margin-bottom: 10px; font-size: 14px; }
+        .notes-text { color: #555; font-size: 13px; line-height: 1.6; }
+        .footer-message { text-align: center; color: #666; font-size: 13px; line-height: 1.6; margin: 25px 0; }
+        .footer { background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%); color: #d4af37; padding: 40px 30px; text-align: center; font-size: 12px; }
+        .footer p { margin: 6px 0; }
+        .footer-highlight { color: white; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="invoice-title">INVOICE</div>
+            <div class="invoice-number">Invoice #{{invoice_number}}</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">Hello {{customer_name}},</div>
+
+            <!-- Invoice Info -->
+            <div class="invoice-info">
+                <div class="info-section">
+                    <div class="info-title">📋 Bill To:</div>
+                    <div class="info-text">
+                        <strong>{{customer_name}}</strong>
+                        {{company_name}}<br>
+                        {{customer_email}}<br>
+                        {{customer_phone}}<br>
+                        {{customer_address}}
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-title">📅 Invoice Details:</div>
+                    <div class="info-text">
+                        <strong>Order #:</strong> {{order_id}}<br>
+                        <strong>Invoice Date:</strong> {{invoice_date}}<br>
+                        <strong>Due Date:</strong> {{due_date}}<br>
+                        <strong>Payment Terms:</strong> {{payment_terms}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Items Table -->
+            <div class="items-section">
+                <table class="items-table">
+                    <thead class="items-header">
+                        <tr>
+                            <th style="width: 45%;">Description</th>
+                            <th style="width: 15%; text-align: right;">Qty</th>
+                            <th style="width: 20%; text-align: right;">Unit Price</th>
+                            <th style="width: 20%; text-align: right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{items_table}}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary-section">
+                <div class="summary-row">
+                    <span class="label">Subtotal:</span>
+                    <span class="amount">${{subtotal}}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Shipping:</span>
+                    <span class="amount">${{shipping}}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Tax:</span>
+                    <span class="amount">${{tax}}</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span class="label">Total Amount Due:</span>
+                    <span class="amount">${{total}}</span>
+                </div>
+            </div>
+
+            <!-- Payment Terms -->
+            <div class="payment-terms">
+                <div class="payment-terms-title">💳 Payment Information</div>
+                <div class="payment-terms-text">
+                    Payment Terms: <strong>{{payment_terms}}</strong><br>
+                    Please make payment via the secure payment link below.<br>
+                    Multiple payment options available including Stripe, credit card, and bank transfer.
+                </div>
+            </div>
+
+            <!-- Payment Button -->
+            <div class="payment-section">
+                <a href="{{payment_link}}" class="payment-button">💳 Pay Invoice Now</a>
+            </div>
+
+            <!-- Notes -->
+            <div class="notes-section">
+                <div class="notes-title">📝 Additional Notes</div>
+                <div class="notes-text">
+                    Thank you for your business! If you have any questions about this invoice or need to discuss payment options, please don't hesitate to contact us.<br><br>
+                    <strong>Questions?</strong> Reach out to our team anytime!
+                </div>
+            </div>
+
+            <!-- Footer Message -->
+            <div class="footer-message">
+                Thank you for choosing LA ROCCA for your wholesale coffee needs.<br>
+                <strong>Excellence in Every Cup</strong>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><span class="footer-highlight">LA ROCCA International Coffee Inc.</span></p>
+            <p>Boca Raton, Florida 33432</p>
+            <p>📞 561-391-1653 | 📧 support@larocca.com</p>
+            <p>© 2026 All rights reserved</p>
+        </div>
+    </div>
+</body>
+</html>

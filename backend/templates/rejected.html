@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); padding: 40px 20px; text-align: center; }
+        .header-icon { font-size: 48px; margin-bottom: 10px; }
+        .logo { font-size: 28px; font-weight: bold; color: white; margin-bottom: 10px; }
+        .tagline { color: #fff; font-size: 14px; opacity: 0.95; }
+        .content { padding: 40px 30px; color: #333; }
+        .greeting { font-size: 24px; font-weight: bold; color: #2c1810; margin-bottom: 20px; }
+        .message { font-size: 14px; line-height: 1.8; color: #555; margin-bottom: 20px; }
+        .info-box { background: #f8d7da; border-left: 4px solid #dc3545; padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .info-title { font-weight: bold; color: #721c24; font-size: 14px; margin-bottom: 10px; }
+        .info-text { color: #721c24; font-size: 13px; line-height: 1.6; }
+        .next-steps { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .step-item { display: flex; margin-bottom: 15px; }
+        .step-number { background: #d4af37; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; flex-shrink: 0; font-size: 14px; }
+        .step-text { font-size: 13px; color: #555; line-height: 1.6; }
+        .step-text strong { color: #2c1810; }
+        .contact-box { background: #e8f4f8; border: 1px solid #b3d9e8; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; }
+        .contact-title { font-weight: bold; color: #2c1810; margin-bottom: 10px; }
+        .contact-text { font-size: 13px; color: #555; margin-bottom: 8px; }
+        .contact-text strong { color: #d4af37; }
+        .footer { background: #2c1810; color: #d4af37; padding: 30px 20px; text-align: center; font-size: 12px; }
+        .footer p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">⏸️</div>
+            <div class="logo">LA ROCCA</div>
+            <div class="tagline">Application Update</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">Hello {{name}},</div>
+            
+            <div class="message">
+                Thank you for your interest in becoming a LA ROCCA wholesale partner. We've carefully reviewed your application for <strong>{{company_name}}</strong>, and unfortunately we're not able to move forward at this time.
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <div class="info-title">📋 Application Status: NOT APPROVED</div>
+                <div class="info-text">
+                    This decision is based on our current wholesale partner requirements and market analysis. We appreciate your understanding.
+                </div>
+            </div>
+
+            <div class="message">
+                <strong>What This Means:</strong><br>
+                Your account has been deactivated and you don't have access to the wholesale catalogue at this time.
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <div style="font-weight: bold; color: #2c1810; margin-bottom: 15px;">But there's good news! Here's what you can do:</div>
+                
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-text"><strong>Contact Us</strong> - Let's discuss your business needs</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-text"><strong>Reapply Later</strong> - Requirements may change in the future</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-text"><strong>Browse Retail</strong> - Shop our public catalogue</div>
+                </div>
+            </div>
+
+            <!-- Contact Box -->
+            <div class="contact-box">
+                <div class="contact-title">Questions? Let's Talk!</div>
+                <div class="contact-text">We'd love to hear from you. Our team is available to discuss partnership opportunities.</div>
+                <div class="contact-text">📞 <strong>561-391-1653</strong></div>
+                <div class="contact-text">📧 <strong>support@larocca.com</strong></div>
+            </div>
+
+            <div class="message">
+                We hope to work with you in the future. Thank you for considering LA ROCCA!<br><br>
+                Best regards,<br>
+                <strong>The LA ROCCA Team</strong>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>LA ROCCA Fine Foods & Beverage</strong></p>
+            <p>Boca Raton, Florida 33432</p>
+            <p>© 2026 All rights reserved</p>
+        </div>
+    </div>
+</body>
+</html>
