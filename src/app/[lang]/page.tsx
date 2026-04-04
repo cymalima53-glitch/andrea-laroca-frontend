@@ -8,6 +8,7 @@ import ProductShowcase from "../../components/products/ProductShowcase";
 import WhyUs from "../../components/home/WhyUs";
 import Testimonials from "../../components/home/Testimonials";
 import FAQ from "../../components/home/FAQ";
+import InquireForm from "../../components/contact/InquireForm";
 import { Product } from "../../app/types";
 
 // Helper function to map categories (same as in products page)
@@ -55,6 +56,7 @@ export default async function Home({ params }: { params: Promise<{ lang: Locale 
             <WhyUs lang={lang} />
             <Testimonials lang={lang} />
             <FAQ title={dict.common.faq.title} items={dict.common.faq.items} />
+            <InquireForm dict={dict} />
         </main>
     );
 }

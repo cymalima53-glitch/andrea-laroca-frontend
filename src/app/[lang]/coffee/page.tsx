@@ -4,7 +4,6 @@ import ProductShowcase from "../../../components/products/ProductShowcase";
 import { getDictionary } from "../../../lib/get-dictionary";
 import styles from './coffee.module.css';
 import LazyVideo from "../../../components/common/LazyVideo";
-import InquireForm from "../../../components/contact/InquireForm";
 
 export default async function CoffeePage({ params }: { params: Promise<{ lang: Locale }> }) {
     const { lang } = await params;
@@ -46,8 +45,6 @@ We are proud distributors of one of the most antique Neapolitan coffee brands, w
                     </div>
                 </section>
 
-                {/* Section 4: Contact Form */}
-                <InquireForm dict={dict} className={styles.coffeeContactForm} />
             </div>
         </main>
     );

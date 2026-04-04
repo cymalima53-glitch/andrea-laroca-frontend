@@ -536,3 +536,7 @@
 {"level":"info","message":"🔒 Environment: development","service":"larocca-api","timestamp":"2026-04-03T01:13:03.762Z"}
 {"level":"info","message":"🌐 Allowed Origins: http://localhost:3000","service":"larocca-api","timestamp":"2026-04-03T01:13:03.763Z"}
 {"level":"info","message":"Webhook queue processor started","service":"larocca-api","timestamp":"2026-04-03T01:13:03.763Z"}
+{"level":"info","message":"✅ Server running on http://localhost:5000","service":"larocca-api","timestamp":"2026-04-04T15:31:24.824Z"}
+{"level":"info","message":"🔒 Environment: development","service":"larocca-api","timestamp":"2026-04-04T15:31:24.827Z"}
+{"level":"info","message":"🌐 Allowed Origins: http://localhost:3000","service":"larocca-api","timestamp":"2026-04-04T15:31:24.827Z"}
+{"level":"info","message":"Webhook queue processor started","service":"larocca-api","timestamp":"2026-04-04T15:31:24.827Z"}

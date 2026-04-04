@@ -38,6 +38,13 @@ export default function CatalogueBrowser({ products }: CatalogueBrowserProps) {
     const isAdmin = user?.role === 'admin';
 
     const handleProductClick = (product: Product) => {
+        // ALWAYS open the modal so users can see product details
+        setModalProduct(product);
+    };
+
+    const handleButtonClick = (e: React.MouseEvent, product: Product) => {
+        e.stopPropagation(); // Don't trigger the card click (which opens modal)
+        
         if (isAdmin || isApproved) {
             setModalProduct(product);
             return;
@@ -236,7 +243,7 @@ export default function CatalogueBrowser({ products }: CatalogueBrowserProps) {
 
                                 <button
                                     id={`btn-${product.id}`}
-                                    onClick={e => { e.stopPropagation(); handleProductClick(product); }}
+                                    onClick={e => handleButtonClick(e, product)}
                                     className={styles.buyButton}
                                     style={btnStyle}
                                 >

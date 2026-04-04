@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, ShoppingCart, ShoppingBag } from 'lucide-react';
+import { X, ShoppingCart, ShoppingBag, Clock, Lock } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useNotification } from '../../context/NotificationContext';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export interface ProductVariant {
     size: string;
@@ -34,11 +36,21 @@ interface ProductVariantModalProps {
 export default function ProductVariantModal({ product, isOpen, onClose, mode }: ProductVariantModalProps) {
     const { addToRetailCart, addToWholesaleCart } = useCart();
     const { showSuccess } = useNotification();
+    const { user } = useAuth();
+    const router = useRouter();
 
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [activeImage, setActiveImage] = useState<'product' | 'nutrition'>('product');
     const [adding, setAdding] = useState(false);
+
+    const isLoggedIn = !!user;
+    const isApproved = user?.role === 'wholesale' && user?.approval_status === 'approved';
+    const isPending = user?.role === 'wholesale' && user?.approval_status === 'pending';
+    const isAdmin = user?.role === 'admin';
+
+    // Must be approved in wholesale mode to add to cart
+    const canAddToCart = mode === 'retail' || isApproved || isAdmin;
 
     // Reset when product changes
     useEffect(() => {
@@ -64,9 +76,13 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
 
     const sizes = Array.from(new Set(variants.map(v => v.size)));
     const types = Array.from(new Set(variants.map(v => v.type)));
+    const hasMultipleTypes = types.length > 1;
 
-    const currentVariant = (selectedSize && selectedType)
-        ? variants.find(v => v.size === selectedSize && v.type === selectedType)
+    // Auto-select the type when there is only one (no user choice needed)
+    const effectiveType = hasMultipleTypes ? selectedType : (types[0] ?? null);
+
+    const currentVariant = (selectedSize && effectiveType)
+        ? variants.find(v => v.size === selectedSize && v.type === effectiveType)
         : null;
 
     const productImage = product.image_url || product.image || '/placeholder.jpg';
@@ -74,10 +90,22 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
     const displayImage = activeImage === 'nutrition' && nutritionImage ? nutritionImage : productImage;
 
     // For no-variant products, always considered "ready to add"
-    const allSelected = hasVariants ? !!(selectedSize && selectedType) : true;
+    // If only one type exists there is nothing to select — size alone is enough
+    const allSelected = hasVariants
+        ? (hasMultipleTypes ? !!(selectedSize && selectedType) : !!selectedSize)
+        : true;
     const price = currentVariant?.price;
 
     const handleAddToCart = async () => {
+        if (mode === 'wholesale' && !canAddToCart) {
+            if (isPending) {
+                showSuccess('Your account is pending admin approval. You will be notified by email.');
+                return;
+            }
+            router.push('/auth/login?tab=register&from=catalogue');
+            return;
+        }
+
         if (hasVariants && !allSelected) return;
         setAdding(true);
 
@@ -97,7 +125,11 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
             } else {
                 addToRetailCart(cartProduct);
             }
-            const variantLabel = (selectedSize && selectedType) ? ` (${selectedSize} · ${selectedType})` : '';
+            const variantLabel = selectedSize
+                ? (hasMultipleTypes && effectiveType
+                    ? ` (${selectedSize} · ${effectiveType})`
+                    : ` (${selectedSize})`)
+                : '';
             showSuccess(`${product.name}${variantLabel} added to ${mode === 'wholesale' ? 'quote' : 'cart'}!`);
             onClose();
         } finally {
@@ -294,49 +326,51 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
                                     </div>
                                 </div>
 
-                                {/* TYPE */}
-                                <div>
-                                    <p style={{ color: '#d4af37', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 700, marginBottom: '10px', fontFamily: 'serif' }}>
-                                        TYPE
-                                    </p>
-                                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                                        {types.map(type => (
-                                            <button
-                                                key={type}
-                                                onClick={() => setSelectedType(type)}
-                                                style={{
-                                                    padding: '8px 20px',
-                                                    borderRadius: '6px',
-                                                    border: `2px solid ${selectedType === type ? '#d4af37' : 'rgba(180,180,180,0.3)'}`,
-                                                    background: selectedType === type
-                                                        ? 'linear-gradient(135deg, #d4af37 0%, #b08d26 100%)'
-                                                        : 'rgba(255,255,255,0.05)',
-                                                    color: selectedType === type ? '#4a1a00' : '#c8c8c8',
-                                                    fontWeight: selectedType === type ? 800 : 500,
-                                                    fontSize: '14px',
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.18s ease',
-                                                    letterSpacing: '0.5px',
-                                                    fontFamily: 'serif',
-                                                }}
-                                                onMouseEnter={e => {
-                                                    if (selectedType !== type) {
-                                                        e.currentTarget.style.borderColor = 'rgba(212,175,55,0.5)';
-                                                        e.currentTarget.style.background = 'rgba(212,175,55,0.08)';
-                                                    }
-                                                }}
-                                                onMouseLeave={e => {
-                                                    if (selectedType !== type) {
-                                                        e.currentTarget.style.borderColor = 'rgba(180,180,180,0.3)';
-                                                        e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                                                    }
-                                                }}
-                                            >
-                                                {type}
-                                            </button>
-                                        ))}
+                                {/* TYPE — only shown when product has multiple types */}
+                                {hasMultipleTypes && (
+                                    <div>
+                                        <p style={{ color: '#d4af37', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 700, marginBottom: '10px', fontFamily: 'serif' }}>
+                                            TYPE
+                                        </p>
+                                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                                            {types.map(type => (
+                                                <button
+                                                    key={type}
+                                                    onClick={() => setSelectedType(type)}
+                                                    style={{
+                                                        padding: '8px 20px',
+                                                        borderRadius: '6px',
+                                                        border: `2px solid ${selectedType === type ? '#d4af37' : 'rgba(180,180,180,0.3)'}`,
+                                                        background: selectedType === type
+                                                            ? 'linear-gradient(135deg, #d4af37 0%, #b08d26 100%)'
+                                                            : 'rgba(255,255,255,0.05)',
+                                                        color: selectedType === type ? '#4a1a00' : '#c8c8c8',
+                                                        fontWeight: selectedType === type ? 800 : 500,
+                                                        fontSize: '14px',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.18s ease',
+                                                        letterSpacing: '0.5px',
+                                                        fontFamily: 'serif',
+                                                    }}
+                                                    onMouseEnter={e => {
+                                                        if (selectedType !== type) {
+                                                            e.currentTarget.style.borderColor = 'rgba(212,175,55,0.5)';
+                                                            e.currentTarget.style.background = 'rgba(212,175,55,0.08)';
+                                                        }
+                                                    }}
+                                                    onMouseLeave={e => {
+                                                        if (selectedType !== type) {
+                                                            e.currentTarget.style.borderColor = 'rgba(180,180,180,0.3)';
+                                                            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                                                        }
+                                                    }}
+                                                >
+                                                    {type}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* PRICE — only show in retail mode */}
                                 {mode === 'retail' && (
@@ -355,19 +389,19 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
                                                     <span style={{ color: '#d4af37', fontSize: '36px', fontWeight: 800, fontFamily: 'serif', lineHeight: 1 }}>
                                                         ${price.toFixed(2)}
                                                     </span>
-                                                    {selectedSize && selectedType && (
+                                                    {selectedSize && (
                                                         <span style={{ color: '#a08030', fontSize: '14px', fontStyle: 'italic' }}>
-                                                            / {selectedSize} · {selectedType}
+                                                            {hasMultipleTypes && effectiveType
+                                                                ? `/ ${selectedSize} · ${effectiveType}`
+                                                                : `/ ${selectedSize}`}
                                                         </span>
                                                     )}
                                                 </>
                                             ) : (
                                                 <span style={{ color: '#a08030', fontSize: '18px', fontStyle: 'italic' }}>
-                                                    {!selectedSize && !selectedType
-                                                        ? 'Select size & type'
-                                                        : !selectedSize
-                                                            ? 'Select a size'
-                                                            : 'Select a type'}
+                                                    {!selectedSize
+                                                        ? (hasMultipleTypes ? 'Select size & type' : 'Select a size')
+                                                        : 'Select a type'}
                                                 </span>
                                             )}
                                         </div>
@@ -392,42 +426,60 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
                         {/* ADD TO CART / QUOTE */}
                         <button
                             onClick={handleAddToCart}
-                            disabled={hasVariants ? (!allSelected || adding) : adding}
+                            disabled={canAddToCart ? (hasVariants ? (!allSelected || adding) : adding) : false}
                             style={{
                                 width: '100%',
                                 padding: '14px 24px',
                                 borderRadius: '8px',
-                                border: 'none',
-                                background: allSelected
-                                    ? 'linear-gradient(135deg, #d4af37 0%, #b08d26 100%)'
-                                    : 'rgba(255,255,255,0.06)',
-                                color: allSelected ? '#2c1810' : '#666',
+                                border: (mode === 'wholesale' && isPending) ? '1px solid #6b9a3a' : 'none',
+                                background: canAddToCart
+                                    ? (allSelected
+                                        ? 'linear-gradient(135deg, #d4af37 0%, #b08d26 100%)'
+                                        : 'rgba(255,255,255,0.06)')
+                                    : (isPending ? 'rgba(255,255,255,0.06)' : 'linear-gradient(135deg, #d4af37 0%, #b08d26 100%)'),
+                                color: canAddToCart 
+                                    ? (allSelected ? '#2c1810' : '#666')
+                                    : (isPending ? '#8bc34a' : '#2c1810'),
                                 fontWeight: 800,
                                 fontSize: '14px',
                                 letterSpacing: '2px',
                                 textTransform: 'uppercase',
-                                cursor: allSelected ? 'pointer' : 'not-allowed',
+                                cursor: canAddToCart 
+                                    ? (allSelected ? 'pointer' : 'not-allowed')
+                                    : (isPending ? 'default' : 'pointer'),
                                 transition: 'all 0.2s ease',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 gap: '10px',
                                 fontFamily: 'serif',
-                                boxShadow: allSelected ? '0 4px 20px rgba(212,175,55,0.3)' : 'none',
+                                boxShadow: (canAddToCart && allSelected) || (!canAddToCart && !isPending) ? '0 4px 20px rgba(212,175,55,0.3)' : 'none',
                             }}
                             onMouseEnter={e => {
-                                if (allSelected) {
+                                if ((canAddToCart && allSelected) || (!canAddToCart && !isPending)) {
                                     e.currentTarget.style.transform = 'translateY(-1px)';
                                     e.currentTarget.style.boxShadow = '0 6px 24px rgba(212,175,55,0.4)';
                                 }
                             }}
                             onMouseLeave={e => {
                                 e.currentTarget.style.transform = '';
-                                e.currentTarget.style.boxShadow = allSelected ? '0 4px 20px rgba(212,175,55,0.3)' : 'none';
+                                e.currentTarget.style.boxShadow = (canAddToCart && allSelected) || (!canAddToCart && !isPending) ? '0 4px 20px rgba(212,175,55,0.3)' : 'none';
                             }}
                         >
                             {adding ? (
                                 '...'
+                            ) : !canAddToCart && mode === 'wholesale' ? (
+                                isPending ? (
+                                    <>
+                                        <Clock size={16} />
+                                        PENDING APPROVAL
+                                    </>
+                                ) : (
+                                    <>
+                                        <Lock size={16} />
+                                        REQUEST ORDER
+                                    </>
+                                )
                             ) : (
                                 <>
                                     {mode === 'wholesale' ? <ShoppingBag size={18} /> : <ShoppingCart size={18} />}
@@ -443,7 +495,9 @@ export default function ProductVariantModal({ product, isOpen, onClose, mode }: 
 
                         {hasVariants && !allSelected && (
                             <p style={{ color: '#6b5020', fontSize: '12px', textAlign: 'center', margin: '-16px 0 0', fontStyle: 'italic' }}>
-                                ↑ Please select both Size and Type to continue
+                                {hasMultipleTypes
+                                    ? '↑ Please select both Size and Type to continue'
+                                    : '↑ Please select a Size to continue'}
                             </p>
                         )}
                     </div>

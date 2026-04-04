@@ -28,7 +28,7 @@ export default function HeaderClient({ lang, dict }: { lang: string; dict: any }
                         </div>
                         <div className={styles.logoTextWrapper}>
                             <span className={styles.logoText}>LA ROCCA</span>
-                            <span className={styles.tagline}>fine foods</span>
+                            <span className={styles.tagline}>fine foods &amp; beverage</span>
                         </div>
                     </Link>
 

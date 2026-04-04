@@ -65,7 +65,10 @@ export default function ProductCard({ product }: { product: Product }) {
                 <div className={styles.content}>
                     <h3 className={styles.name}>{product.name}</h3>
                     <p className={styles.price} style={{ fontSize: '13px', color: '#9ca3af', fontStyle: 'italic' }}>
-                        Select size & type →
+                        {(() => {
+                            const uniqueTypes = [...new Set((product.variants || []).map(v => v.type))];
+                            return uniqueTypes.length > 1 ? 'Select size & type →' : 'Select size →';
+                        })()}
                     </p>
                     <p className={styles.description}>{product.description}</p>
                 </div>
