@@ -57,7 +57,7 @@ export default async function RetailProductsPage({ params }: { params: Promise<{
                 lang={lang || 'en'}
                 title="OUR PRODUCTS"
                 subtitle="Explore our premium selection of Italian coffee and fine foods."
-                imageSrc="/images/product%20italian.png"
+                imageSrc="/images/itallianfood.png"
                 eyebrow="Retail Shop"
             />
 

@@ -53,7 +53,7 @@ export default async function Hero({
             </div>
 
             <div className={styles.content}>
-                <span className={styles.eyebrow}>{eyebrow || dict.common.hero.eyebrow}</span>
+                {eyebrow !== "" && <span className={styles.eyebrow}>{eyebrow || dict.common.hero.eyebrow}</span>}
                 <h1 className={styles.title}>{title || dict.common.hero.title}</h1>
                 {tagline && <span className={styles.tagline}>{tagline}</span>}
                 <p className={styles.subtitle} style={{ whiteSpace: 'pre-line' }}>{subtitle || dict.common.hero.subtitle}</p>

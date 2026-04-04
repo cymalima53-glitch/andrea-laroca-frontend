@@ -59,10 +59,10 @@ export default async function CataloguePage({
         <main>
             <Hero
                 lang={lang}
-                imageSrc="/wholesale_hero_v2.png"
+                imageSrc="/images/product%20italian.png"
                 title={heroTitle}
                 subtitle={heroSubtitle}
-                eyebrow={heroEyebrow}
+                eyebrow=""
             />
 
             <div className="py-12">
